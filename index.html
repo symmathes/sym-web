@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>symmathes — coming soon</title>
+<meta name="description" content="Be the parent who knows exactly what to do tonight. symmathes is getting ready." />
+<style>
+  :root {
+    --ink: #0f1424;
+    --ink-2: #161d34;
+    --paper: #f4efe2;
+    --paper-dim: #cfc9ba;
+    --accent: #e7a542;
+    --accent-deep: #b97a24;
+    --muted: #7c86a6;
+    --line: rgba(244, 239, 226, 0.14);
+    --glow: rgba(231, 165, 66, 0.55);
+
+    --font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+    --font-body: Optima, Candara, "Noto Sans", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+
+  :root[data-theme="light"] {
+    --ink: #0f1424;
+    --paper: #f4efe2;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --ink: #0f1424;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  /* the lamp glow */
+  .lamp {
+    position: fixed;
+    top: 50%;
+    left: 62%;
+    width: min(70vw, 900px);
+    height: min(70vw, 900px);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--glow) 0%, rgba(231,165,66,0.16) 32%, rgba(231,165,66,0) 62%);
+    pointer-events: none;
+    z-index: 0;
+    animation: breathe 7s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% { opacity: 0.75; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+  }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image:
+      radial-gradient(rgba(244,239,226,0.6) 0.5px, transparent 0.5px);
+    background-size: 3px 3px;
+  }
+
+  header.top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .wordmark {
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-weight: 500;
+  }
+
+  main {
+    max-width: 46rem;
+    padding-block: clamp(3rem, 10vh, 5rem) clamp(2rem, 6vh, 3rem);
+  }
+
+  .about {
+    max-width: 40rem;
+    padding-block: clamp(2rem, 6vh, 3.5rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .about h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    margin: 0 0 1.1rem;
+    color: var(--paper);
+    text-wrap: balance;
+  }
+
+  .about p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    color: #c9c4b6;
+    margin: 0 0 1.1rem;
+  }
+
+  .about p:last-child { margin-bottom: 0; }
+
+  .about strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  .about .name {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+  }
+
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0.6em var(--glow);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.3rem, 5.4vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0 0 1.6rem;
+    text-wrap: balance;
+    color: var(--paper);
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .lede {
+    font-size: clamp(1.02rem, 1.6vw, 1.2rem);
+    line-height: 1.65;
+    color: #d7d2c4;
+    max-width: 34rem;
+    margin: 0 0 2.6rem;
+  }
+
+  .lede strong {
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  form.notify {
+    display: flex;
+    gap: 0.6rem;
+    max-width: 30rem;
+    flex-wrap: wrap;
+  }
+
+  .notify input[type="email"] {
+    flex: 1 1 14rem;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 0.85rem 1rem;
+    color: var(--paper);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    outline-offset: 3px;
+  }
+
+  .notify input[type="email"]::placeholder {
+    color: var(--muted);
+  }
+
+  .notify input[type="email"]:focus-visible {
+    outline: 2px solid var(--accent);
+    border-color: var(--accent);
+  }
+
+  .notify button {
+    background: var(--accent);
+    color: #241505;
+    border: none;
+    border-radius: 3px;
+    padding: 0.85rem 1.4rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  .notify button:hover { background: #f2b665; }
+  .notify button:active { transform: translateY(1px); }
+
+  .notify button:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  .status {
+    margin-top: 0.9rem;
+    font-size: 0.85rem;
+    color: var(--accent);
+    min-height: 1.2em;
+  }
+
+  .fine {
+    margin-top: 0.9rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .fine a { color: var(--muted); }
+  .fine a:hover { color: var(--paper); }
+
+  footer.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    padding-top: 1.4rem;
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  .status-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+
+  .status-line .dot {
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lamp, .eyebrow::before { animation: none; }
+  }
+
+  @media (max-width: 34rem) {
+    header.top { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    footer.bottom { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="lamp"></div>
+
+<div class="page">
+  <header class="top">
+    <span class="wordmark">symmathes</span>
+    <span>kitchen table, 8:14&nbsp;pm</span>
+  </header>
+
+  <main>
+    <p class="eyebrow">Getting ready</p>
+    <h1>Be the parent who knows <em>exactly</em> what to do tonight.</h1>
+    <p class="lede">
+      symmathes turns tonight's homework into a plan you can actually follow —
+      <strong>what to review, how long it takes, and what to say</strong> when
+      they're stuck. We're still in the workshop. Leave your email and we'll
+      write the moment the door opens.
+    </p>
+
+    <form class="notify" id="notifyForm">
+      <label for="email" class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Email address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="status" id="notifyStatus" role="status" aria-live="polite"></p>
+
+    <p class="fine">
+      No spam, one email when we launch. Questions in the meantime —
+      <a href="mailto:hello@symmathes.com">hello@symmathes.com</a>.
+    </p>
+  </main>
+
+  <section class="about">
+    <p class="eyebrow">What symmathes means</p>
+    <h2>From the Greek <span class="name">syn-</span> (together) and <span class="name">manthánein</span> (to learn) — co-learning.</h2>
+    <p>
+      symmathes is a nightly study companion built for a parent and a
+      middle-schooler to use <strong>together</strong>, not a tutoring app
+      aimed at the child alone. Each evening it hands the parent a
+      90-second Brief — the topic, an adult-level explainer, and three
+      questions to ask — so a parent who's forgotten the syllabus can
+      still sit down and be useful. The child plays a short, game-like
+      session that rewards effort and comebacks on questions they missed
+      before, so there's something to win daily, long before the marks
+      catch up.
+    </p>
+    <p>
+      We're not selling tutoring. We're selling twenty minutes a parent
+      can actually spend well — the competence to be useful tonight, and
+      proof, most weeks, that it made a difference.
+    </p>
+  </section>
+
+  <footer class="bottom">
+    <span>symmathes.com</span>
+    <span class="status-line"><span class="dot"></span> currently in the workshop</span>
+  </footer>
+</div>
+
+<script>
+  var form = document.getElementById('notifyForm');
+  var status = document.getElementById('notifyStatus');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value.trim();
+    if (!email) return;
+    status.textContent = "Got it — we'll write to " + email + " when the door opens.";
+    form.reset();
+  });
+</script>
+</body>
+</html>
