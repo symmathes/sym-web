@@ -327,20 +327,7 @@
     <p class="lede">
       symmathes turns tonight's homework into a plan you can actually follow —
       <strong>what to review, how long it takes, and what to say</strong> when
-      they're stuck. We're still in the workshop. Leave your email and we'll
-      write the moment the door opens.
-    </p>
-
-    <form class="notify" id="notifyForm">
-      <label for="email" class="sr-only" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0);">Email address</label>
-      <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
-      <button type="submit">Notify me</button>
-    </form>
-    <p class="status" id="notifyStatus" role="status" aria-live="polite"></p>
-
-    <p class="fine">
-      No spam, one email when we launch. Questions in the meantime —
-      <a href="mailto:hello@symmathes.com">hello@symmathes.com</a>.
+      they're stuck. We're still in the workshop.
     </p>
   </main>
 
@@ -371,16 +358,5 @@
   </footer>
 </div>
 
-<script>
-  var form = document.getElementById('notifyForm');
-  var status = document.getElementById('notifyStatus');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var email = document.getElementById('email').value.trim();
-    if (!email) return;
-    status.textContent = "Got it — we'll write to " + email + " when the door opens.";
-    form.reset();
-  });
-</script>
 </body>
 </html>
